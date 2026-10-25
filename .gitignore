@@ -3,3 +3,5 @@ dist/
 # wird von scripts/fetch-dwd.mjs erzeugt
 public/data/
 .claude/
+# wird von scripts/osm-extrahieren.sh erzeugt
+public/kuehle-orte/osm/

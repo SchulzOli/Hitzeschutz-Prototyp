@@ -5,6 +5,7 @@ import './style.css';
 import { entfernungMeter, formatiereEntfernung } from './geo.js';
 import { stufe, findeWarnkreis, tagesbezeichnung, hoechsteSchwere, istAmtlicheWarnung, simuliereHitzewelle } from './hitze.js';
 import { ladeKuehleOrteAusOsm } from './osm.js';
+import { erstelleKachelLader, KeineKachelnError } from './kacheln.js';
 import { bewerteRisiko } from './risiko.js';
 import { MERKMALE, ladeProfil, speichereProfil, loescheProfil, leeresProfil } from './profil.js';
 import { KATEGORIEN } from './kategorien.js';
@@ -16,6 +17,7 @@ const MIN_ZOOM_ORTE = 14;
 const LISTENLAENGE = 10;
 
 const $ = (id) => document.getElementById(id);
+const osmKacheln = erstelleKachelLader(`${BASIS}kuehle-orte/osm/`);
 
 const zustand = {
   profil: ladeProfil(),
@@ -107,6 +109,10 @@ async function ladeHitze() {
 
   hitzeEbene.addData(zustand.hitze);
   $('datenstand').textContent = `DWD-Datenstand: ${new Date(`${zustand.hitze.stand}T12:00:00Z`).toLocaleDateString('de-DE')}`;
+  osmKacheln.ladeIndex().then(
+    (index) => ($('datenstand').textContent += ` · OpenStreetMap-Stand: ${new Date(`${index.stand}T12:00:00Z`).toLocaleDateString('de-DE')}`),
+    () => {},
+  );
   zeichneTage();
 }
 
@@ -128,7 +134,17 @@ let laufendeAbfrage = null;
 async function ladeOrteUm(lat, lon, radius) {
   laufendeAbfrage?.abort();
   laufendeAbfrage = new AbortController();
-  $('orte-status').textContent = 'Kühle Orte werden aus OpenStreetMap geladen – das kann bei ausgelasteten Servern bis zu einer Minute dauern …';
+  $('orte-status').textContent = 'Kühle Orte werden geladen …';
+  try {
+    fuegeOrteHinzu(await osmKacheln.orteImUmkreis(lat, lon, radius));
+    $('orte-status').textContent = '';
+    zeichneOrteListe();
+    return;
+  } catch (fehler) {
+    // Ohne vorab erzeugte Kacheln (z. B. lokale Entwicklung) live bei Overpass fragen.
+    if (!(fehler instanceof KeineKachelnError)) console.warn(fehler);
+  }
+  $('orte-status').textContent = 'Kühle Orte werden live aus OpenStreetMap geladen – das kann bei ausgelasteten Servern bis zu einer Minute dauern …';
   try {
     fuegeOrteHinzu(await ladeKuehleOrteAusOsm(lat, lon, radius, { signal: laufendeAbfrage.signal }));
     $('orte-status').textContent = '';

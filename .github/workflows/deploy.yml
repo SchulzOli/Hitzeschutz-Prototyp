@@ -9,6 +9,14 @@ on:
   schedule:
     - cron: '20 7,10,14 * * *'
   workflow_dispatch:
+    inputs:
+      osm_region:
+        description: 'Geofabrik-Region für Kühle Orte, z. B. europe/germany oder europe/germany/bremen'
+        default: europe/germany
+      osm_neu:
+        description: 'OSM-Kacheln neu erzeugen, auch wenn diese Woche schon welche im Cache liegen'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -19,22 +27,52 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  OSM_REGION: ${{ inputs.osm_region || 'europe/germany' }}
+
 jobs:
   bauen:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
       - run: npm test
       - run: npm run validieren
+
+      # Kühle Orte aus OpenStreetMap: einmal pro Woche aus dem Geofabrik-Extrakt
+      # erzeugen und zwischen den Läufen im Cache halten (docs/adr/0004).
+      - id: woche
+        run: echo "woche=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+      - id: osm-cache
+        if: github.event_name != 'pull_request'
+        uses: actions/cache/restore@v6
+        with:
+          path: public/kuehle-orte/osm
+          key: osm-kuehle-orte-${{ env.OSM_REGION }}-${{ steps.woche.outputs.woche }}${{ inputs.osm_neu && format('-{0}', github.run_id) || '' }}
+          restore-keys: |
+            osm-kuehle-orte-${{ env.OSM_REGION }}-
+      - name: Kühle Orte aus OpenStreetMap extrahieren
+        id: osm
+        if: github.event_name != 'pull_request' && steps.osm-cache.outputs.cache-hit != 'true'
+        # Schlägt der Download fehl, bleiben die Kacheln der Vorwoche aus dem Cache in Gebrauch.
+        continue-on-error: true
+        run: bash scripts/osm-extrahieren.sh "$OSM_REGION"
+      - if: steps.osm.outcome == 'success'
+        uses: actions/cache/save@v6
+        with:
+          path: public/kuehle-orte/osm
+          key: ${{ steps.osm-cache.outputs.cache-primary-key }}
+      - if: steps.osm.outcome == 'failure'
+        run: echo "::warning::OSM-Extraktion fehlgeschlagen – verwende vorhandene Kacheln bzw. Overpass als Rückfall."
+
       - run: npm run build
         env:
           CI: 'true'
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request'
         with:
           path: dist
@@ -48,4 +86,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
