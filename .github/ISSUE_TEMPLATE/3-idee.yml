@@ -1,0 +1,33 @@
+name: Idee oder Vorschlag
+description: Neue Funktion, Änderung am Datenschema oder fachliche Verbesserung.
+title: "[Idee] "
+labels: [idee]
+body:
+  - type: dropdown
+    id: art
+    attributes:
+      label: Worum geht es?
+      options:
+        - Datenschema „Kühle Orte“
+        - Hinweise / fachliche Inhalte
+        - Neue Funktion
+        - Datenquelle
+        - Sonstiges
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Welches Problem soll gelöst werden?
+      description: Bitte aus Sicht der Nutzenden oder der Verwaltung beschreiben.
+    validations:
+      required: true
+  - type: textarea
+    id: vorschlag
+    attributes:
+      label: Ihr Vorschlag
+  - type: textarea
+    id: quellen
+    attributes:
+      label: Quellen oder Beispiele
+      description: Z. B. Hitzeaktionsplan, Leitfaden, Karte einer anderen Kommune.

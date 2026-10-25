@@ -1,0 +1,39 @@
+name: Fehler melden
+description: Etwas funktioniert nicht oder wird falsch angezeigt.
+title: "[Fehler] "
+labels: [fehler]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für die Meldung! Bitte **keine Gesundheitsdaten** oder genauen Wohnadressen hier eintragen. Das Issue ist öffentlich.
+  - type: textarea
+    id: beschreibung
+    attributes:
+      label: Was ist passiert?
+      description: Was haben Sie getan, was haben Sie erwartet, was ist stattdessen passiert?
+    validations:
+      required: true
+  - type: input
+    id: ort
+    attributes:
+      label: Betroffener Ort oder Landkreis
+      description: Z. B. „Landkreis Ebersberg“ oder „Marienplatz München“. Bitte keine private Adresse.
+  - type: dropdown
+    id: bereich
+    attributes:
+      label: Bereich
+      options:
+        - Hitzewarnung / Landkreis
+        - Kühle Orte
+        - Persönliche Hinweise
+        - Ortssuche / Standort
+        - Darstellung / Bedienung / Barrierefreiheit
+        - Sonstiges
+    validations:
+      required: true
+  - type: input
+    id: geraet
+    attributes:
+      label: Gerät und Browser
+      placeholder: z. B. Android, Chrome / Windows, Firefox

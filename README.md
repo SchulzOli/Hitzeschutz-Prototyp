@@ -141,9 +141,15 @@ Die Seite ist rein statisch (`dist/`) und läuft auch auf jedem kommunalen Webse
 - [ ] Kartenkacheln und Ortssuche selbst hosten, damit Dritte keine IP-Adressen erhalten. Für die kühlen Orte ist das bereits umgesetzt.
 - [ ] Förderung prüfen, z. B. [Prototype Fund](https://www.prototypefund.de/) (Bewerbung bis 30.11.2026).
 
+## Datenschutz
+
+Kein Konto, keine Cookies, kein Tracking. Das Hitze-Profil und der gewählte Ort bleiben im Browser (`localStorage`). Beim Laden der Karte und bei der Ortssuche erhalten GitHub Pages und die OpenStreetMap-Dienste technisch bedingt die IP-Adresse. Details stehen in den [Datenschutzhinweisen](https://schulzoli.github.io/Hitzeschutz-Prototyp/datenschutz.html) ([Quelltext](public/datenschutz.html)).
+
 ## Mitmachen
 
-Issues und Pull Requests sind willkommen, besonders von Kommunen, Gesundheitsämtern und Hitzeschutz-Fachleuten zum Datenschema.
+Beiträge sind willkommen, besonders von Kommunen, Gesundheitsämtern und Hitzeschutz-Fachleuten. Wie Sie kommunale Daten einbringen, das Schema kommentieren oder Fehler melden, steht in [CONTRIBUTING.md](CONTRIBUTING.md). Für Issues gibt es Vorlagen.
+
+Metadaten für Verwaltungsportale wie openCode.de stehen in [`publiccode.yml`](publiccode.yml).
 
 ## Lizenz
 

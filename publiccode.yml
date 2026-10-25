@@ -1,0 +1,80 @@
+# Metadaten nach dem publiccode.yml-Standard für Software der öffentlichen Hand
+# (https://yml.publiccode.tools, genutzt u. a. von openCode.de).
+publiccodeYmlVersion: "0"
+
+name: Hitzeschutz-Karte
+url: "https://github.com/SchulzOli/Hitzeschutz-Prototyp"
+landingURL: "https://schulzoli.github.io/Hitzeschutz-Prototyp/"
+softwareVersion: "0.1.0"
+releaseDate: "2026-10-26"
+platforms:
+  - web
+categories:
+  - geographic-information-systems
+  - data-visualization
+  - digital-citizenship
+developmentStatus: development
+softwareType: "standalone/web"
+roadmap: "https://github.com/SchulzOli/Hitzeschutz-Prototyp#roadmap"
+
+intendedAudience:
+  countries:
+    - de
+  scope:
+    - healthcare
+    - environment
+    - local-authorities
+    - emergency-services
+    - welfare
+
+description:
+  de:
+    shortDescription: >-
+      Offene Hitzeschutz-Karte mit DWD-Hitzewarnungen, kühlen Orten in der Nähe
+      und persönlichen Hinweisen – ohne Konto, ohne Tracking.
+    longDescription: |
+      Die **Hitzeschutz-Karte** verbindet die amtlichen Hitzewarnungen und den
+      8-Tage-Hitzetrend des Deutschen Wetterdienstes mit kühlen Orten in der
+      Umgebung: Trinkwasserstellen, Bibliotheken, Gotteshäuser, Museen, Parks,
+      Badestellen und von Kommunen offiziell ausgewiesene Kühle Räume.
+
+      Nutzerinnen und Nutzer können optional angeben, ob sie zu einer
+      Risikogruppe gehören (z. B. ältere Menschen, chronisch Kranke,
+      Schwangere, Familien mit Kleinkindern, Menschen, die im Freien arbeiten).
+      Die Anwendung gibt dann passende Verhaltenshinweise. Diese Angaben
+      bleiben ausschließlich im Browser.
+
+      Kommunen haben heute keine gemeinsame Form, um Kühle Orte zu
+      veröffentlichen. Das Projekt schlägt dafür ein **offenes Datenschema**
+      (GeoJSON-Profil mit JSON Schema) vor und liefert ein Prüfwerkzeug mit.
+      Datensätze in diesem Schema erscheinen in der Karte als offiziell
+      ausgewiesene Orte.
+
+      Die Anwendung ist rein statisch und läuft ohne eigenen Server auf
+      GitHub Pages oder jedem kommunalen Webserver. Die Daten werden in einer
+      Build-Pipeline aktualisiert.
+    documentation: "https://github.com/SchulzOli/Hitzeschutz-Prototyp#readme"
+    features:
+      - Amtliche DWD-Hitzewarnungen und 8-Tage-Hitzetrend für alle Landkreise
+      - Ortssuche, Standortermittlung oder Auswahl per Klick in der Karte
+      - Kühle Orte im Umkreis auf der Karte und als barrierearme Liste
+      - Persönliche Hitzeschutz-Hinweise nach freiwilligem, lokal gespeichertem Profil
+      - Offenes Datenschema „Kühle Orte“ mit Prüfwerkzeug für Kommunen
+      - Rund 150.000 kühle Orte aus OpenStreetMap, wöchentlich aktualisiert
+      - Demo-Modus mit simulierter Hitzewelle für Vorführungen
+      - Kein Konto, keine Cookies, kein Tracking
+    screenshots:
+      - docs/screenshot-demo.jpg
+
+legal:
+  license: EUPL-1.2
+
+maintenance:
+  type: community
+  contacts:
+    - name: SchulzOli
+
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - de

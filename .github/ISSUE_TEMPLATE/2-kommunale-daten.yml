@@ -1,0 +1,56 @@
+name: Kommunale Daten beitragen
+description: Ihre Kommune möchte Kühle Orte oder Kühle Räume in die Karte einbringen.
+title: "[Daten] "
+labels: [daten]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Schön, dass Sie Daten beitragen möchten! Hintergrund und Schema: [CONTRIBUTING.md](https://github.com/SchulzOli/Hitzeschutz-Prototyp/blob/main/CONTRIBUTING.md).
+  - type: input
+    id: herausgeber
+    attributes:
+      label: Herausgebende Stelle
+      placeholder: z. B. Stadt Musterstadt, Gesundheitsamt
+    validations:
+      required: true
+  - type: input
+    id: quelle
+    attributes:
+      label: Wo sind die Daten heute veröffentlicht?
+      description: Link zu Geoportal, Website, PDF, Open-Data-Portal …
+  - type: dropdown
+    id: format
+    attributes:
+      label: In welchem Format liegen die Daten vor?
+      options:
+        - Bereits im Schema dieses Projekts (GeoJSON)
+        - GeoJSON / Shapefile / WFS (anderes Schema)
+        - Tabelle (CSV, Excel)
+        - Nur als Karte, PDF oder Webseite
+        - Weiß ich nicht
+    validations:
+      required: true
+  - type: dropdown
+    id: lizenz
+    attributes:
+      label: Lizenz
+      options:
+        - Datenlizenz Deutschland – Namensnennung 2.0 (dl-de/by-2-0)
+        - Datenlizenz Deutschland – Zero 2.0 (dl-de/zero-2-0)
+        - CC BY 4.0
+        - Andere / noch offen
+    validations:
+      required: true
+  - type: textarea
+    id: hinweise
+    attributes:
+      label: Weitere Hinweise
+      description: Z. B. besondere Felder (Klimatisierung, Betreuung, Öffnungszeiten nur bei Hitzewarnung), Aktualisierungsrhythmus, Ansprechperson in der Verwaltung.
+  - type: checkboxes
+    id: rechte
+    attributes:
+      label: Bestätigung
+      options:
+        - label: Die Daten dürfen unter der angegebenen Lizenz veröffentlicht werden und enthalten keine personenbezogenen Daten.
+          required: true

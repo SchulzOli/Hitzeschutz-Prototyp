@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Datenschutz – Hitzeschutz-Karte</title>
+    <style>
+      :root { --hintergrund: #f7f6f3; --text: #1d1d1f; --leise: #5b5b60; --akzent: #0b5cad; --rand: #d9d7d2; color-scheme: light dark; }
+      @media (prefers-color-scheme: dark) { :root { --hintergrund: #161618; --text: #ececef; --leise: #a9a9b0; --akzent: #6aaef5; --rand: #3a3a40; } }
+      body { margin: 0; background: var(--hintergrund); color: var(--text); font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+      main { max-width: 46rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+      a { color: var(--akzent); }
+      h1 { font-size: 1.6rem; margin-top: .5rem; }
+      h2 { font-size: 1.15rem; margin-top: 2rem; border-top: 1px solid var(--rand); padding-top: 1rem; }
+      table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+      th, td { text-align: left; vertical-align: top; padding: .5rem; border-bottom: 1px solid var(--rand); }
+      .leise { color: var(--leise); font-size: .9rem; }
+      :focus-visible { outline: 3px solid #ffbf47; outline-offset: 2px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p><a href="./">← Zurück zur Karte</a></p>
+      <h1>Datenschutzhinweise</h1>
+      <p>
+        Die Hitzeschutz-Karte ist ein nicht-kommerzielles Open-Source-Projekt. Sie hat kein Benutzerkonto,
+        keine eigene Datenbank, setzt keine Cookies und verwendet keine Analyse- oder Tracking-Werkzeuge.
+      </p>
+
+      <h2>Ihr Hitze-Profil und Ihr Ort</h2>
+      <p>
+        Die Angaben im Hitze-Profil (z. B. Alter über 65, Vorerkrankungen, Schwangerschaft) und der zuletzt
+        gewählte Ort werden <strong>ausschließlich im Speicher Ihres Browsers</strong> (<code>localStorage</code>)
+        abgelegt. Sie werden nicht an uns oder an Dritte übertragen. Die Hinweise werden direkt in Ihrem Browser berechnet.
+      </p>
+      <p>
+        Sie können diese Daten jederzeit über „Profil und Ort löschen“ in der Seitenleiste entfernen oder
+        die Website-Daten in Ihrem Browser löschen.
+      </p>
+      <p>
+        „Meinen Standort verwenden“ fragt Ihren Standort über die Standortfunktion Ihres Browsers ab, erst
+        nach Ihrer Zustimmung im Browser. Die Koordinaten werden nur im Browser verwendet.
+      </p>
+
+      <h2>Welche Dienste beim Aufruf beteiligt sind</h2>
+      <p>
+        Beim Laden der Seite und der Karte stellt Ihr Browser Verbindungen zu folgenden Diensten her. Diese
+        erhalten dabei technisch bedingt Ihre IP-Adresse, Browser-Informationen und die jeweils abgerufene
+        Datei. Aus den abgerufenen Kartenausschnitten lässt sich ungefähr ablesen, welche Gegend Sie ansehen.
+      </p>
+      <table>
+        <thead>
+          <tr><th scope="col">Dienst</th><th scope="col">Wozu</th><th scope="col">Weitere Informationen</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GitHub Pages (GitHub, Inc.)</td>
+            <td>Auslieferung dieser Website, der Hitzedaten und der kühlen Orte</td>
+            <td><a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a></td>
+          </tr>
+          <tr>
+            <td>OpenStreetMap-Kartenkacheln (OpenStreetMap Foundation)</td>
+            <td>Hintergrundkarte</td>
+            <td><a href="https://osmfoundation.org/wiki/Privacy_Policy">Datenschutzerklärung der OSMF</a></td>
+          </tr>
+          <tr>
+            <td>Nominatim (OpenStreetMap Foundation)</td>
+            <td>Ortssuche – nur wenn Sie eine Adresse suchen; der Suchbegriff wird übertragen</td>
+            <td><a href="https://osmfoundation.org/wiki/Privacy_Policy">Datenschutzerklärung der OSMF</a></td>
+          </tr>
+          <tr>
+            <td>Overpass API (öffentliche Server der OSM-Gemeinschaft)</td>
+            <td>Nur als Rückfall, falls die vorab erzeugten Daten zu kühlen Orten nicht verfügbar sind; dabei werden die Koordinaten des Suchbereichs übertragen</td>
+            <td><a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API im OSM-Wiki</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Die Hitzewarnungen des Deutschen Wetterdienstes werden nicht von Ihrem Browser, sondern vorab beim
+        Erstellen der Website abgerufen. Dabei werden keine Daten über Sie übertragen.
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        Fragen und Hinweise zum Datenschutz bitte als
+        <a href="https://github.com/SchulzOli/Hitzeschutz-Prototyp/issues">Issue im GitHub-Repository</a>.
+        Der Quellcode ist öffentlich und kann überprüft werden.
+      </p>
+
+      <p class="leise">Stand: Oktober 2026</p>
+    </main>
+  </body>
+</html>

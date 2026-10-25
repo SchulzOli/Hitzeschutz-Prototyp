@@ -42,6 +42,10 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run validieren
+      - name: publiccode.yml prüfen
+        uses: italia/publiccode-parser-action@v1
+        with:
+          publiccode: publiccode.yml
 
       # Kühle Orte aus OpenStreetMap: einmal pro Woche aus dem Geofabrik-Extrakt
       # erzeugen und zwischen den Läufen im Cache halten (docs/adr/0004).

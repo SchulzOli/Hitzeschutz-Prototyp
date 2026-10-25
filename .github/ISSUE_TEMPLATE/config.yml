@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Fehler in OpenStreetMap-Daten
+    url: https://www.openstreetmap.org/
+    about: Falsche oder fehlende Trinkbrunnen, Parks usw. bitte direkt in OpenStreetMap korrigieren. Die Karte übernimmt Änderungen wöchentlich.
+  - name: Amtliche Hitzewarnungen des DWD
+    url: https://www.dwd.de/DE/wetter/warnungen/warnWetter_node.html
+    about: Maßgeblich sind immer die Warnungen des Deutschen Wetterdienstes.
