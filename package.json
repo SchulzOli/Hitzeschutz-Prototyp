@@ -1,0 +1,36 @@
+{
+  "name": "hitzeschutz-prototyp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offene Hitzeschutz-Karte: DWD-Hitzewarnungen, kühle Orte und persönliche Hinweise – plus Entwurf eines Datenschemas für Kühle Orte.",
+  "type": "module",
+  "scripts": {
+    "daten": "node scripts/fetch-dwd.mjs",
+    "predev": "npm run daten",
+    "dev": "vite",
+    "prebuild": "npm run daten",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "validieren": "node scripts/validate-kuehle-orte.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SchulzOli/Hitzeschutz-Prototyp.git"
+  },
+  "keywords": ["hitzeschutz", "hitzeaktionsplan", "kuehle-orte", "open-data", "dwd", "openstreetmap", "civic-tech"],
+  "license": "EUPL-1.2",
+  "bugs": {
+    "url": "https://github.com/SchulzOli/Hitzeschutz-Prototyp/issues"
+  },
+  "homepage": "https://github.com/SchulzOli/Hitzeschutz-Prototyp#readme",
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  }
+}

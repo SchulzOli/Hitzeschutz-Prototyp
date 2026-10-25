@@ -1,0 +1,52 @@
+{
+  "type": "FeatureCollection",
+  "metadaten": {
+    "herausgeber": "Musterstadt (fiktives Beispiel, keine echten Orte)",
+    "ags": "00000000",
+    "lizenz": "dl-de/zero-2-0",
+    "stand": "2026-10-25",
+    "kontakt": "hitzeschutz@musterstadt.example",
+    "schemaVersion": "0.1"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "musterstadt-001",
+      "geometry": { "type": "Point", "coordinates": [10.0, 51.0] },
+      "properties": {
+        "name": "Stadtbibliothek Musterstadt (Beispiel)",
+        "kategorie": "kuehler_raum",
+        "offiziell_ausgewiesen": true,
+        "beschreibung": "Lesesaal im Erdgeschoss, bei Hitzewarnung als Kühler Raum geöffnet.",
+        "adresse": "Musterplatz 1, 00000 Musterstadt",
+        "oeffnungszeiten": "Mo-Fr 10:00-19:00; Sa 10:00-14:00",
+        "innenraum": true,
+        "klimatisiert": true,
+        "trinkwasser_kostenlos": true,
+        "sitzgelegenheiten": true,
+        "toilette": true,
+        "barrierefrei": "ja",
+        "kostenfrei": true,
+        "betreiber": "Musterstadt, Kulturamt",
+        "quelle": "Musterstadt",
+        "stand": "2026-10-25"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "musterstadt-002",
+      "geometry": { "type": "Point", "coordinates": [10.003, 51.002] },
+      "properties": {
+        "name": "Trinkbrunnen am Marktplatz (Beispiel)",
+        "kategorie": "trinkwasser",
+        "offiziell_ausgewiesen": true,
+        "innenraum": false,
+        "trinkwasser_kostenlos": true,
+        "barrierefrei": "teilweise",
+        "kostenfrei": true,
+        "quelle": "Musterstadt",
+        "stand": "2026-10-25"
+      }
+    }
+  ]
+}

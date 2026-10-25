@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hitzeschutz-Karte</title>
+    <meta name="description" content="Offener Prototyp: DWD-Hitzewarnungen, kühle Orte in der Nähe und persönliche Hitzeschutz-Hinweise auf einer Karte." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%237a1fc2'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='white'%3E%E2%98%80%3C/text%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <a class="skiplink" href="#seitenleiste">Zur Textansicht springen</a>
+    <header class="kopf">
+      <h1>Hitzeschutz-Karte <span class="marke">Prototyp</span></h1>
+      <p>Hitzewarnungen des DWD und kühle Orte in Ihrer Nähe – offen, ohne Anmeldung, Ihre Angaben bleiben auf Ihrem Gerät.</p>
+    </header>
+
+    <main class="layout">
+      <section id="karte" class="karte" aria-label="Karte mit Hitzewarnungen und kühlen Orten"></section>
+
+      <aside id="seitenleiste" class="seitenleiste" tabindex="-1">
+        <section class="block" aria-labelledby="ort-titel">
+          <h2 id="ort-titel">Ihr Ort</h2>
+          <form id="suche" class="suche" role="search">
+            <label for="suchfeld">Adresse oder Ort</label>
+            <div class="suche-zeile">
+              <input id="suchfeld" name="q" type="search" autocomplete="street-address" placeholder="z. B. Marienplatz München" required />
+              <button type="submit">Suchen</button>
+            </div>
+          </form>
+          <button id="standort" type="button" class="zweitrangig">Meinen Standort verwenden</button>
+          <p class="hinweis">Oder klicken Sie auf die Karte.</p>
+          <p id="ort-status" class="status" role="status"></p>
+        </section>
+
+        <section class="block" aria-labelledby="hitze-titel">
+          <h2 id="hitze-titel">Hitzelage</h2>
+          <div id="tage" class="tage" role="group" aria-label="Vorhersagetag wählen"></div>
+          <div id="hitzelage" aria-live="polite">
+            <p class="hinweis">Wählen Sie einen Ort, um die Hitzelage für Ihren Landkreis zu sehen.</p>
+          </div>
+        </section>
+
+        <section class="block" aria-labelledby="orte-titel">
+          <h2 id="orte-titel">Kühle Orte in der Nähe</h2>
+          <fieldset id="filter" class="filter">
+            <legend>Anzeigen</legend>
+          </fieldset>
+          <p id="orte-status" class="status" role="status"></p>
+          <ol id="orte-liste" class="orte-liste"></ol>
+        </section>
+
+        <section class="block" aria-labelledby="profil-titel">
+          <details id="profil">
+            <summary><h2 id="profil-titel">Mein Hitze-Profil</h2></summary>
+            <p class="hinweis">Optional. Ihre Auswahl wird nur in diesem Browser gespeichert und nie übertragen.</p>
+            <fieldset id="merkmale" class="merkmale">
+              <legend>Trifft auf mich zu</legend>
+            </fieldset>
+            <button id="profil-loeschen" type="button" class="zweitrangig">Profil und Ort löschen</button>
+          </details>
+        </section>
+
+        <footer class="block fuss">
+          <p><strong>Keine medizinische Beratung.</strong> Im Notfall: 112.</p>
+          <p id="datenstand"></p>
+          <p>
+            Daten: <a href="https://www.dwd.de/DE/leistungen/opendata/opendata.html">Deutscher Wetterdienst</a> (CC BY 4.0),
+            <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL).
+            Quellcode: <a href="https://github.com/SchulzOli/Hitzeschutz-Prototyp">GitHub</a> (EUPL-1.2).
+          </p>
+        </footer>
+      </aside>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+name: Testen, Daten aktualisieren, veröffentlichen
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # Der DWD aktualisiert die Hitzedaten täglich (vormittags). Mehrmals abrufen,
+  # damit die veröffentlichte Karte aktuell bleibt.
+  schedule:
+    - cron: '20 7,10,14 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bauen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run validieren
+      - run: npm run build
+        env:
+          CI: 'true'
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: dist
+
+  veroeffentlichen:
+    if: github.event_name != 'pull_request'
+    needs: bauen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
