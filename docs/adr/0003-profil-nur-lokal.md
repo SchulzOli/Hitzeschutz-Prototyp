@@ -19,6 +19,6 @@ schwanger ist. Das sind **Gesundheitsdaten** (besondere Kategorie nach Art. 9 DS
 - Keine Verarbeitung von Gesundheitsdaten auf Servern, keine Einwilligungsverwaltung nötig.
 - Push-Benachrichtigungen bei neuer Warnung sind so nicht möglich. Eine spätere Lösung müsste
   ohne Profilübertragung auskommen, etwa über ein Abo nur auf den Warnkreis.
-- Hinweis: Bei Ortssuche (Nominatim) und Kartenkacheln/Overpass (OpenStreetMap) sehen diese
-  Dienste die IP-Adresse und den angefragten Kartenausschnitt. Für den Produktivbetrieb sollten
-  sie selbst gehostet werden (siehe ADR 0004).
+- Hinweis: Bei Ortssuche (Nominatim) und Kartenkacheln (OpenStreetMap) sehen diese Dienste die
+  IP-Adresse und den angefragten Kartenausschnitt. Für den Produktivbetrieb sollten sie selbst
+  gehostet werden. Die kühlen Orte kommen bereits vom eigenen Server (siehe ADR 0004).

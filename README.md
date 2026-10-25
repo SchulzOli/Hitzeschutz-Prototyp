@@ -47,7 +47,7 @@ Hitze ist in Deutschland ein erhebliches Gesundheitsrisiko, besonders für älte
 |---|---|---|---|
 | Hitzewarnungen und Hitzetrend je Warnkreis | [DWD Open Data](https://opendata.dwd.de/climate_environment/health/forecasts/heat/) | CC BY 4.0 | Build-Pipeline (keine CORS-Header) |
 | Geometrien der Warnkreise | [DWD GeoServer, `dwd:Warngebiete_Kreise`](https://maps.dwd.de/geoserver/dwd/ows?service=WFS&request=GetCapabilities) | CC BY 4.0 | Build-Pipeline |
-| Kühle Orte (Basis) | [OpenStreetMap](https://www.openstreetmap.org/copyright) über die Overpass API | ODbL 1.0 | Live im Browser |
+| Kühle Orte (Basis) | [OpenStreetMap](https://www.openstreetmap.org/copyright), Extrakt von [Geofabrik](https://download.geofabrik.de/) | ODbL 1.0 | Build-Pipeline, wöchentlich, als statische Kacheln (Rückfall: Overpass API live) |
 | Kühle Orte (kommunal) | Datensätze im Schema dieses Projekts, `public/kuehle-orte/` | je Datensatz | statisch |
 | Kartenkacheln, Ortssuche | OpenStreetMap-Kacheln, [Nominatim](https://nominatim.org/) | ODbL 1.0 | Live im Browser |
 
@@ -59,12 +59,16 @@ flowchart LR
     DWD1[DWD opendata<br/>hwtrend_*.json] --> F[scripts/fetch-dwd.mjs]
     DWD2[DWD WFS<br/>Warnkreise] --> F
     F --> H[public/data/hitze.geojson]
-    H --> V[vite build] --> P[(GitHub Pages<br/>statisch)]
+    GF[Geofabrik<br/>OSM-Extrakt] -->|wöchentlich, Cache| O[osmium + scripts/osm-kacheln.mjs]
+    O --> T[kuehle-orte/osm/12/x/y.json]
+    H --> V[vite build]
+    T --> V
+    V --> P[(GitHub Pages<br/>statisch)]
   end
   subgraph Browser
     P --> UI[Karte + Seitenleiste]
     LS[(localStorage<br/>Profil)] <--> UI
-    UI -->|Umkreisabfrage| OV[Overpass API]
+    UI -.->|nur Rückfall| OV[Overpass API]
     UI -->|Ortssuche| NO[Nominatim]
     K[(Kommunale Daten<br/>Schema v0.1)] --> UI
   end
@@ -75,7 +79,7 @@ Die Architektur-Entscheidungen stehen unter [`docs/adr/`](docs/adr):
 1. [Statische Auslieferung, DWD-Daten per Build-Pipeline](docs/adr/0001-statische-auslieferung.md)
 2. [Eigenes, offenes Datenschema für Kühle Orte](docs/adr/0002-eigenes-datenschema.md)
 3. [Persönliches Profil bleibt auf dem Gerät](docs/adr/0003-profil-nur-lokal.md)
-4. [OpenStreetMap als Basisquelle](docs/adr/0004-openstreetmap-als-basisquelle.md)
+4. [OpenStreetMap als Basisquelle, vorab als statische Kacheln](docs/adr/0004-openstreetmap-als-basisquelle.md)
 
 ## Datenschema „Kühle Orte“ (Entwurf v0.1)
 
@@ -109,24 +113,32 @@ npm run dev
 
 `npm run dev` lädt vorher automatisch die aktuellen DWD-Daten (`npm run daten`). Danach ist die Anwendung unter http://localhost:5173 erreichbar, der Demo-Modus unter http://localhost:5173/?demo.
 
+Lokal gibt es zunächst keine OSM-Kacheln, die kühlen Orte kommen dann live über Overpass. Wer die Kacheln lokal erzeugen will, braucht Linux oder WSL mit `osmium-tool`. Dann genügt ein kleiner Extrakt:
+
+```bash
+bash scripts/osm-extrahieren.sh europe/germany/bremen
+```
+
 ```bash
 npm test
 ```
 
 ## Veröffentlichen
 
-Der Workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) testet, lädt die Daten, baut die Seite und veröffentlicht sie auf GitHub Pages. Er läuft bei jedem Push auf `main` und dreimal täglich. Einmalig ist dafür unter *Settings → Pages → Source* die Option **GitHub Actions** zu wählen.
+Der Workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) testet, lädt die DWD-Daten, erzeugt einmal pro Woche die OSM-Kacheln, baut die Seite und veröffentlicht sie auf GitHub Pages. Er läuft bei jedem Push auf `main` und dreimal täglich. Einmalig ist dafür unter *Settings → Pages → Source* die Option **GitHub Actions** zu wählen.
+
+Bei manuellem Start (*Actions → Run workflow*) lassen sich die Region (z. B. `europe/germany/bayern`) wählen und die Kacheln sofort neu erzeugen.
 
 Die Seite ist rein statisch (`dist/`) und läuft auch auf jedem kommunalen Webserver.
 
 ## Roadmap
 
-- [ ] Kühle Orte aus OpenStreetMap **vorab in der Pipeline** extrahieren (Geofabrik + osmium) statt live über die oft überlastete Overpass API (siehe ADR 0004).
+- [x] Kühle Orte aus OpenStreetMap **vorab in der Pipeline** extrahieren (Geofabrik + osmium) statt live über die oft überlastete Overpass API (siehe ADR 0004).
 - [ ] Erste echte kommunale Datensätze übernehmen, z. B. aus offenen Geoportalen.
 - [ ] Schema mit Kommunen, Gesundheitsämtern und Fachstellen abstimmen. Danach eine Veröffentlichung als Standard prüfen (XRepository/KoSIT).
 - [ ] Öffnungszeiten auswerten („jetzt geöffnet“).
 - [ ] Barrierefreiheit prüfen lassen (BITV-Test).
-- [ ] Kartenkacheln und Ortssuche selbst hosten, damit Dritte keine IP-Adressen erhalten.
+- [ ] Kartenkacheln und Ortssuche selbst hosten, damit Dritte keine IP-Adressen erhalten. Für die kühlen Orte ist das bereits umgesetzt.
 - [ ] Förderung prüfen, z. B. [Prototype Fund](https://www.prototypefund.de/) (Bewerbung bis 30.11.2026).
 
 ## Mitmachen
